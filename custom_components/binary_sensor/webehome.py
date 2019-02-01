@@ -90,12 +90,12 @@ class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
         """Return the class of this binary sensor."""
         if self._device.display_type == 300:
             return 'door'
-        elif self._device.display_type == 310:
+        if self._device.display_type == 310:
             return 'motion'
-        elif self._device.display_type == 500:
+        if self._device.display_type == 500:
             return 'smoke'
-        else:
-            return None
+        
+        return None
 
     @property
     def available(self) -> bool:
@@ -109,5 +109,5 @@ class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
         """Return the state of the binary sensor."""
         if self._device.display_type == 300:
             return self._device.operation_status == DOOR_WINDOW_OPEN
-        elif self._device.display_type == 310:
+        if self._device.display_type == 310:
             return self._device.operation_status == MOTION_DETECTED
