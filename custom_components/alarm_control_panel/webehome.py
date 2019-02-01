@@ -62,7 +62,7 @@ class WeBeHomeAlarm(WeBeHomeEntity, AlarmControlPanel):
     @property
     def name(self):
         """Return name of location."""
-        return "alarm_{}".format(self._location.base_unit_id)
+        return 'alarm_{}'.format(self._location.base_unit_id)
 
     @property
     def base_unit_id(self):
@@ -83,10 +83,10 @@ class WeBeHomeAlarm(WeBeHomeEntity, AlarmControlPanel):
     def connection_status(self):
         """Return the connection status of the location."""
         online_position = self._location.operation_status[1]
-        if online_position == "0":
-            return "Online"
-        else:
-            return "Offline"
+        if online_position == '0':
+            return 'Online'
+
+        return 'Offline'
 
     @property
     def operation_status_info(self):
@@ -100,48 +100,48 @@ class WeBeHomeAlarm(WeBeHomeEntity, AlarmControlPanel):
 
         if alarm_state == ALARM_DISARMED:
             return STATE_ALARM_DISARMED
-        elif alarm_state == ALARM_ARMED_AWAY:
+        if alarm_state == ALARM_ARMED_AWAY:
             return STATE_ALARM_ARMED_AWAY
-        elif alarm_state == ALARM_ARMED_HOME:
+        if alarm_state == ALARM_ARMED_HOME:
             return STATE_ALARM_ARMED_HOME
-        else:
-            return STATE_UNKNOWN
+
+        return STATE_UNKNOWN
 
     @property
     def icon(self):
         """Return the icon to use in the frontend, if any."""
         if self.state == STATE_ALARM_DISARMED:
             return 'mdi:shield-outline'
-        elif self.state == STATE_ALARM_ARMED_AWAY:
+        if self.state == STATE_ALARM_ARMED_AWAY:
             return 'mdi:shield'
-        elif self.state == STATE_ALARM_ARMED_HOME:
+        if self.state == STATE_ALARM_ARMED_HOME:
             return 'mdi:shield-half-full'
-        else:
-            return 'mdi:help'
+
+        return 'mdi:help'
 
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
         return {
-            "friendly_name": self._location.name,
-            "type": 'location',
-            "base_unit_id": self._location.base_unit_id,
-            "online_status": self.connection_status,
-            "operation_status": self._location.operation_status,
-            "operation_status_info": self._location.operation_status_info
+            'friendly_name': self._location.name,
+            'type': 'location',
+            'base_unit_id': self._location.base_unit_id,
+            'online_status': self.connection_status,
+            'operation_status': self._location.operation_status,
+            'operation_status_info': self._location.operation_status_info
         }
 
     def alarm_disarm(self, code=None):
         """Send disarm command."""
-        _LOGGER.debug('webehome set arm state DISARMED')
+        _LOGGER.debug("Set arm state: DISARMED")
         return self._session.set_alarm_state('Disarm')
 
     def alarm_arm_home(self, code=None):
         """Send arm home command."""
-        _LOGGER.debug('webehome set arm state ARMED_HOME')
+        _LOGGER.debug("Set arm state: ARMED_HOME")
         return self._session.set_alarm_state('ArmHome')
 
     def alarm_arm_away(self, code=None):
         """Send arm away command."""
-        _LOGGER.debug('webehome set arm state ARMED_AWAY')
+        _LOGGER.debug("Set arm state: ARMED_AWAY")
         return self._session.set_alarm_state('ArmAway')

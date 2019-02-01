@@ -64,25 +64,25 @@ class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
     @property
     def unique_id(self) -> str:
         """Return a unique ID."""
-        return "webehome_{}".format(self._device.device_id)
+        return 'webehome_{}'.format(self._device.device_id)
 
     @property
     def name(self) -> Optional[str]:
         """Return name of device."""
-        return "{}_{}".format(self._device.type.lower(), self._device.name)
+        return '{}_{}'.format(self._device.type.lower(), self._device.name)
 
     @property
     def state_attributes(self):
         """Return the state attributes."""
         return {
-            "friendly_name": self._device.name,
-            "type": self._device.type,
-            "display_type": self._device.display_type,
-            "battery_level": self._device.battery_level,
-            "operation_status": self._device.operation_status,
-            "last_event_time": self._device.last_event_time,
-            "last_event_data": self._device.last_event_data,
-            "lost_connection": self._device.lost_connection
+            'friendly_name': self._device.name,
+            'type': self._device.type,
+            'display_type': self._device.display_type,
+            'battery_level': self._device.battery_level,
+            'operation_status': self._device.operation_status,
+            'last_event_time': self._device.last_event_time,
+            'last_event_data': self._device.last_event_data,
+            'lost_connection': self._device.lost_connection
         }
 
     @property
@@ -92,9 +92,7 @@ class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
             return 'door'
         if self._device.display_type == 310:
             return 'motion'
-        if self._device.display_type == 500:
-            return 'smoke'
-        
+
         return None
 
     @property
@@ -102,6 +100,7 @@ class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
         """Return True if entity is available."""
         if not self._device.lost_connection:
             return True
+
         return False
 
     @property
