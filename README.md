@@ -1,3 +1,14 @@
+# Webehome integration for Home assistant
+
+This component makes it possible to integrate your webehome devices into
+home assistant. 
+
+Supported devices:
+- Alarm box (with alarm status, online status, last event and more..)
+- Motion detectors (PIR)
+- Magnetic contacts
+
+
 # Setup
 
 Copy the *custom_components* directory in this repo to the root of your
