@@ -9,12 +9,17 @@ Supported devices:
 - Magnetic contacts
 
 
-# Setup
+# Installation
 
-Copy the *custom_components* directory in this repo to the root of your
-home assistant *config* folder. You might already have a directory named
-"custom_component" in there if so, merge the directories.
+- Clone or copy the root of the repository into `<config 
+dir>/custom_components/webehome`
 
+```
+cd /path/to/homeassisant
+mkdir custom_components
+cd custom_components
+git clone https://github.com/bratanon/ha-webehome.git webehome
+```
 
 ## Configuration in Home Assistant
 

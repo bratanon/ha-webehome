@@ -19,7 +19,8 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.event import async_track_point_in_utc_time
 from homeassistant.util.dt import utcnow
 
-REQUIREMENTS = ['https://github.com/bratanon/pybehome/archive/1.0.0.zip#pybehome==1.0.0']
+REQUIREMENTS = ['https://github.com/bratanon/pybehome/archive/1.0.1.zip'
+                '#pybehome==1.0.1']
 
 _LOGGER = logging.getLogger(__name__)
 
