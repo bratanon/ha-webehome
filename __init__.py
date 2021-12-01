@@ -57,7 +57,8 @@ async def async_setup(hass, config):
 
     hass.data[DATA_WEBEHOME] = PyBeHome(username, password)
 
-    if not hass.data[DATA_WEBEHOME].login():
+    result = await hass.async_add_executor_job(hass.data[DATA_WEBEHOME].login)
+    if not result:
         _LOGGER.exception("Unable to connect to WeBeHome OPEN API")
         return False
 
@@ -65,14 +66,14 @@ async def async_setup(hass, config):
         discovery.load_platform(hass, platform, DOMAIN, {}, config)
 
     async def async_update_device_data(now):
-        hass.data[DATA_WEBEHOME].update_devices()
+        result = await hass.async_add_executor_job(hass.data[DATA_WEBEHOME].update_devices)
         async_dispatcher_send(hass, SIGNAL_UPDATE_DEVICES)
 
         async_track_point_in_utc_time(
             hass, async_update_device_data, utcnow() + DEVICE_SCAN_INTERVAL)
 
     async def async_update_location_data(now):
-        hass.data[DATA_WEBEHOME].update_location()
+        result = await hass.async_add_executor_job(hass.data[DATA_WEBEHOME].update_location)
         async_dispatcher_send(hass, SIGNAL_UPDATE_LOCATION)
 
         async_track_point_in_utc_time(
@@ -82,9 +83,9 @@ async def async_setup(hass, config):
     await async_update_location_data(None)
 
     @callback
-    def logout(event):
+    async def logout(event):
         """Logout of WeBeHome OPEN API."""
-        hass.data[DATA_WEBEHOME].token_destroy()
+        result = await hass.async_add_executor_job(hass.data[DATA_WEBEHOME].token_destroy)
 
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, logout)
 
