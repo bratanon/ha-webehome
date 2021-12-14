@@ -7,7 +7,7 @@ https://home-assistant.io/components/alarm_control_panel.webehome/
 
 import logging
 
-from homeassistant.components.alarm_control_panel import AlarmControlPanel
+from homeassistant.components.alarm_control_panel import AlarmControlPanelEntity
 from homeassistant.const import (STATE_ALARM_ARMED_AWAY,
                                  STATE_ALARM_ARMED_HOME, STATE_ALARM_DISARMED,
                                  STATE_UNKNOWN)
@@ -30,14 +30,14 @@ async def async_setup_platform(hass, config, async_add_entities,
     """Set up a WeBeHome control panel."""
     session = hass.data[DATA_WEBEHOME]
 
-    session.update_location()
+    result = await hass.async_add_executor_job(session.update_location)
     location = session.get_location()
     async_add_entities([WeBeHomeAlarm(session, location)])
 
     return True
 
 
-class WeBeHomeAlarm(WeBeHomeEntity, AlarmControlPanel):
+class WeBeHomeAlarm(WeBeHomeEntity, AlarmControlPanelEntity):
     """Representation of a WeBeHome alarm status."""
 
     def __init__(self, session, location: Location, code=None):

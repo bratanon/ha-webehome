@@ -8,7 +8,7 @@ https://home-assistant.io/components/binary_sensor.webehome/
 import logging
 from typing import Optional
 
-from homeassistant.components.binary_sensor import BinarySensorDevice
+from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
@@ -28,18 +28,18 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     session = hass.data[DATA_WEBEHOME]
 
     devices = []
-    session.update_devices()
+    result = await hass.async_add_executor_job(session.update_devices)
     for device in session.get_devices():
         if device.display_type not in [300, 310]:
             continue
-        devices.append(WeBeHomeBinarySensorDevice(session, device))
+        devices.append(WeBeHomeBinarySensorEntity(session, device))
 
     async_add_entities(devices)
 
     return True
 
 
-class WeBeHomeBinarySensorDevice(WeBeHomeEntity, BinarySensorDevice):
+class WeBeHomeBinarySensorEntity(WeBeHomeEntity, BinarySensorEntity):
     """Representation of a WeBeHome binary sensor."""
 
     def __init__(self, session, device: Device):

@@ -1,0 +1,10 @@
+{
+  "domain": "webehome",
+  "name": "WeBeHome",
+  "documentation": "https://github.com/bratanon/ha-webehome/blob/master/README.md",
+  "dependencies": [],
+  "codeowners": ["@bratanon"],
+  "requirements": ["git+https://github.com/bratanon/pybehome.git#pybehome==1.0.1"],
+  "version": "v0.1",
+  "iot_class": "cloud_polling"
+}
